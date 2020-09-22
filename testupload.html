@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test file uploads now</title>
+	<style type="text/css">
+		input[type=file]::-webkit-file-upload-button {
+			background: #172f3b;
+			width: 120px;
+			height: 60px;
+			border-radius: 8px;
+			color: #fff;
+			border: 0px solid #172f3b;
+			font-family: Nunito;
+			font-weight: bold;
+			outline: none;
+		}
+		input[type=file]::-webkit-file-upload-button:hover {
+			cursor: pointer;
+			transform: scale(1.1);
+			transition: transform 0.2s ease;
+		}
+		input[type=file]::-webkit-file-upload-button:active {
+			border: 0px solid #172f3b;
+		}
+		#fileInput {
+			font-family: Nunito;
+			font-size: 16px;
+			color: #53b1e0;
+		}
+
+		.file {
+			position: absolute;
+			top: 35%;
+			left: 7%;
+		}
+
+		#intro {
+			position: absolute;
+			top: 20%;
+			left: 8%;
+			max-width: 84%;
+		}
+
+		#response {
+			position: absolute;
+			top: 45%;
+			left: 8%;
+		}
+
+		body {
+		  margin: 0;
+		  padding: 2rem 1.5rem;
+		  font: 1rem/1.5 "Nunito", sans-serif;
+		  color: #ffffff;
+		  background-color: #172f3b;
+		}
+	</style>
+</head>
+<body>
+	<p id="intro">This is a simple upload test for file uploads using JS' fetch API. This is going to an Express JS backend, but that could be replaced with any other backend, such as Flask.</p>
+
+	<label class="file">
+		<input type="file" id="fileInput" aria-label="File browser example">
+		<span class="file-custom"></span>
+	</label>
+
+	<p id="response"></p>
+
+	<script type="text/javascript">
+		const fileInput = document.querySelector('#fileInput')
+
+
+		const upload = () => {
+			file = document.querySelector('#fileInput')
+
+			const formData = new FormData()
+			formData.append('fileInput', file.files[0])
+
+			const payload = {
+				method: 'POST',
+				body: formData
+			}
+
+			fetch('http://127.0.0.1:3000/upload', payload).then(res => res.text())
+        	.then((res) => {
+            	document.querySelector('#response').innerHTML = res
+        	})
+		}
+
+		fileInput.addEventListener('change', upload, false);
+	</script>
+
+</form>
+</body>
+</html>
